@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>AdvaceIt Report</title>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="http://documentcloud.github.com/underscore/underscore-min.js"></script>
+    <script language="javascript" type="text/javascript" src="resources/flot/jquery.flot.js"></script> <!-- http://www.flotcharts.org/flot/jquery.flot.js -->
+    <script language="javascript" type="text/javascript" src="resources/flot/jquery.flot.tooltip.js"></script> 
+    
+    <script language="javascript" type="text/javascript" src="resources/report-script.js"></script>
+    
+    <link rel="stylesheet" href="resources/box-source-logos.css">
+    <link rel="stylesheet" href="resources/report-styles.css">
+  </head>
+
+  <body>
+
+    <div class="content">
+
+      <div class="content-row">
+        <div id="reviews"  class="flot-container">
+          <div class="chart-header" >
+            <div class="trend"></div>
+            <div class="value"></div>
+            <div class="text">
+              <p></p>
+            </div>
+            <div class="stars" >
+            </div>
+          </div>
+          <div class="flot-placeholder"></div>
+        </div>
+      </div>
+
+      <div class="content-row">
+        <div id="star-rating" class="flot-container">
+          <div class="chart-header" >
+            <div class="trend"></div>
+            <div class="value"></div>
+            <div class="text">
+              <p></p>
+            </div>
+            <div class="stars" >
+            </div>
+          </div>
+          <div class="flot-placeholder"></div>
+        </div>
+      </div>
+
+      <div class="content-row">
+        <div id="bar-chart" class="flot-container">
+          <div class="chart-header" >
+            <div class="trend"></div>
+            <div class="value"></div>
+            <div class="text">
+              <p></p>
+            </div>
+            <div class="stars" >
+            </div>
+          </div>
+          <div class="flot-placeholder"></div>
+        </div>
+      </div>
+
+      <div class="content-row">
+        <div id="reviews-requiring-attention-by-provider">
+        </div>
+      </div>
+
+      <div class="content-row">
+        <div class="content-row-header"> Reviews requiring attention by source</div>
+        <div id="reviews-requiring-attention-totals">
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

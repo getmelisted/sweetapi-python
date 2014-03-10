@@ -1,0 +1,257 @@
+.content {
+  width: 850px;
+  margin: auto;
+  font-family: sans-serif;
+}
+
+.content-row {
+  border-top: dotted 3px #e0e0e0; 
+  padding: 20px 10px;
+}
+
+.content-row:first-child {
+  border: none;
+}
+
+.content-row-header{
+    text-transform: uppercase;
+    font-size: 20px;
+}
+
+/*Charts*/
+
+.chart-header {
+  overflow:hidden; 
+  height:60px;
+  line-height:60px;
+  font-family: sans-serif;
+  font-size: 30px;
+  font-style: italic;
+}
+
+.chart-header div {
+  float:left;
+  padding-right: 10px;
+}
+
+.chart-header .trend {
+  margin-top: 10px;
+  height: 19px;
+  line-height: 19px;
+  width: 14px;
+  padding-right: 2px;
+}
+
+.chart-header .trend.up{
+  background: url('imgs/trend-up.png') no-repeat;
+}
+
+.chart-header .trend.down{
+  background: url('imgs/trend-down.png') no-repeat;
+}
+
+.chart-header .text {
+  width: 17%; /*if you change the width of the content, propably have to change this*/
+  margin-top: 10px;
+}
+
+.chart-header .text p {
+  margin:0;
+  font-size:20px;
+  line-height: 20px;
+  text-transform: uppercase;
+}
+
+.chart-header .stars div{
+  height: 27px;
+  line-height: 27px;
+  width: 29px;
+  display: inline-block;
+  padding:0px;
+  margin-top:10px;
+}
+
+.chart-header .stars div.inactive{
+  background: url('imgs/gray-star-empty.png') no-repeat;
+}
+
+.chart-header .stars div.half{
+  background: url('imgs/gray-star-medium.png') no-repeat;
+}
+
+.chart-header .stars div.active{
+  background: url('imgs/gray-star-full.png') no-repeat;
+}
+
+.flot-container {
+  height: 450px;
+  margin: 0px auto 50px;
+  padding: 10px;
+}
+
+.flot-placeholder {
+  font-size: 14px;
+  height: 100%;
+  line-height: 1.2em;
+  width: 100%;
+  cursor: pointer;
+}
+
+#flotTip{ 
+  border: none !important;
+  text-transform: uppercase;
+  font-family: sans-serif;
+  font-weight: 600;
+  font-size: 0.9em !important;
+  color: white;
+}
+
+#bar-chart .xAxis .tickLabel {
+  line-height:22px;
+  font-family: sans-serif;
+  font-style: italic;
+  font-size: 24px;
+  vertical-align:middle ;
+}
+
+#bar-chart .xAxis .tickLabel span {
+  background-image:url(imgs/blue-star.png);
+  width:22px;
+  height:22px;
+  margin-left: 2px;
+  margin-top: 2px; 
+  display: inline-block;
+  background-repeat:no-repeat;
+  line-height:24px;
+}
+
+
+/*reviews requiring attention by source*/
+
+.reviews-requiring-attention {
+  border-top: 3px double #e0e0e0;
+  padding: 20px
+}
+
+.reviews-requiring-attention:first-child {
+  border-top: none;
+}
+
+.reviews-requiring-attention-row {
+  overflow: hidden;
+  margin: 20px auto 0 auto;
+  padding-top: 15px;
+  border-top: solid 1px #e0e0e0;
+}
+
+.reviews-requiring-attention-row:first-child {
+  border: none;
+}
+
+.reviews-requiring-attention-row > div {
+  float:left;
+}
+
+.reviews-requiring-attention-row .review-icon {
+  width : 15%;
+}
+
+.reviews-requiring-attention-row .review-data {
+  width : 30%;
+}
+
+.reviews-requiring-attention-row .review-text {
+  width : 50%;
+}
+
+.reviews-requiring-attention-row .thumbnail {
+  text-align: center;
+  width: 50px;
+  /*border: 1px solid #DDDDDD;
+  border-radius: 4px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075);*/
+  display: block;
+  line-height: 1;
+  padding: 4px;
+}
+
+/*using the same listings and reviews icons from sweetiq.com*/
+.source-image {
+  background-image: url(imgs/box-source-logos.png);
+  display: inline-block;
+  height: 23px;
+  width: 100%;
+}
+
+.reviews-requiring-attention-row .review-stars {
+  overflow: hidden;
+  width: 75px;
+  padding-left: 15px;
+}
+
+.reviews-requiring-attention-row .review-stars div{
+  height: 14px;
+  line-height: 14px;
+  width: 14px;
+  padding:0px;
+  float: left;
+}
+
+.reviews-requiring-attention-row .review-stars div.inactive{
+  background: url('imgs/yellow-star-inactive.png') no-repeat;
+}
+
+.reviews-requiring-attention-row .review-stars div.half{
+  background: url('imgs/yellow-star-half.png') no-repeat;
+}
+
+.reviews-requiring-attention-row .review-stars div.active{
+  background: url('imgs/yellow-star-active.png') no-repeat;
+}
+
+.reviews-requiring-attention-row blockquote {
+  margin:0 1em;
+  padding: 1em;
+  quotes:"\201C""\201D";
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+}
+
+.reviews-requiring-attention-row blockquote:before{
+  color:#e0e0e0;
+  content:open-quote;
+  font-size:4em;
+  line-height:.1em;
+  margin-right:.25em;
+  vertical-align:-.4em;
+}
+
+/* Reviews requiring attention resume */
+
+#reviews-requiring-attention-totals {
+  padding:10px;
+  font-style: italic;
+  font-size: large;
+  color: #396d94;
+  text-transform: capitalize;
+}
+
+.reviews-requiring-total {
+  float:left;
+  width:50%;
+  padding: 5px 0;
+}
+
+.review-elem-total-provider { 
+  float:left;
+  width:70%; 
+  padding: 0px 1%;
+}
+
+.review-elem-total-number {
+  float:right;
+  width:20%;
+  text-align:right;
+  padding: 0px 10px;
+}
+
