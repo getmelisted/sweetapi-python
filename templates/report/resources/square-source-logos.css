@@ -1,0 +1,38 @@
+.thumbnail .source-image .icon{
+      background-image: url("imgs/source-logos.png");
+      display: inline-block;
+      height: 40px;
+      width: 40px;
+      display: inline-block;
+      background-position: 0% 0%; 
+}
+.source-image.source-yelp .icon {
+    background-position: 0px 500px;
+}
+.source-image.source-google .icon {
+    background-position: 0px 450px;
+}
+.source-image.source-facebook .icon {
+    background-position: 0px 400px;
+}
+.source-image.source-411 .icon {
+    background-position: 0px 350px;
+}
+.source-image.source-n49 .icon {
+    background-position: 0px 300px;
+}
+.source-image.source-yahoo .icon {
+    background-position: 0px 250px;
+}
+.source-image.source-bing .icon {
+    background-position: 0px 200px;
+}
+.source-image.source-foursquare .icon {
+    background-position: 0px 150px;
+}
+.source-image.source-tripadvisor .icon {
+    background-position: 0px 100px;
+}
+.source-image.source-yellowpages .icon {
+    background-position: 0px 50px;
+}

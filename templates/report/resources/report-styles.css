@@ -51,7 +51,7 @@
 }
 
 .chart-header .text {
-  width: 17%; /*if you change the width of the content, propably have to change this*/
+  width: 20%; /*if you change the width of the content, propably have to change this*/
   margin-top: 10px;
 }
 
@@ -125,6 +125,32 @@
   line-height:24px;
 }
 
+.icons {
+  padding-top:10px;
+}
+
+.icons .thumbnail .not-found {
+  opacity: 0.2;
+}
+
+.icons .thumbnail .source-image {
+  position:relative;
+  display: inline-block;
+  height: 40px;
+  width: 40px;
+}
+
+.icons .thumbnail .source-image .not-found-btn{
+  position: absolute; 
+  font-style: normal; 
+  color: red; 
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 15px;
+  right: 0px;
+  top:0px;
+  padding: 2px;
+}
 
 /*reviews requiring attention by source*/
 
@@ -173,14 +199,6 @@
   display: block;
   line-height: 1;
   padding: 4px;
-}
-
-/*using the same listings and reviews icons from sweetiq.com*/
-.source-image {
-  background-image: url(imgs/box-source-logos.png);
-  display: inline-block;
-  height: 23px;
-  width: 100%;
 }
 
 .reviews-requiring-attention-row .review-stars {

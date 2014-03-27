@@ -34,6 +34,22 @@ $(function () {
       avgStarRating: 3.5,
       trendData: data,
     },
+    socialMedia : {
+      providers: [ //"411", "bing", "facebook", "foursquare", "google", "n49", "tripadvisor", "yahoo", "yellowpages", "yelp"
+        {provider: "411", listing: true},
+        {provider: "Bing", listing: true},
+        {provider: "Facebook", listing: true},
+        {provider: "Foursquare", listing: false},
+        {provider: "Google", listing: false},
+        {provider: "N49", listing: false},
+        {provider: "Tripadvisor", listing: false},
+        {provider: "Yahoo", listing: true},
+        {provider: "Yellowpages", listing: false},
+        {provider: "Yelp", listing: false},
+      ],
+      headerValue: "0",
+      trendData: data,
+    },
     starRatingDistribution : {
       positiveTrend: false,
       headerValue: 0.4,
@@ -44,9 +60,23 @@ $(function () {
       "tripadvisor" : reviewList,
       "google" : reviewList,
       "yahoo":  reviewList,
-    }
+    },
   };
 
+  function proccessingSocialMediaData(){
+    var providersListed = {},
+      totalListed = 0, elem;
+    
+    for (var i = 0, ii = pageData.socialMedia.providers.length; i < ii; i++){
+      elem = pageData.socialMedia.providers[i];
+      if(elem.listing){
+        providersListed[elem.provider.toLowerCase()] = elem.provider;
+        totalListed++;
+      }
+    }
+    pageData.socialMedia.headerValue = totalListed + " / " + pageData.socialMedia.providers.length;
+    pageData.socialMedia.providersListed = providersListed;
+  }
 
   //convert the date in a readable string, with format: Month Day Year (removing day of the week)
   function getReadableDateNoWeekDay(date){
@@ -210,7 +240,7 @@ $(function () {
 
   function renderReviewSections(reviewsRequiringAttention){
     //as we don't know how many reviews, we add them to the page dynamically
-    var reviewRowTmpl = '<div class="reviews-requiring-attention-row"> <div class="review-icon"> <div class="thumbnail"> <span class="source-image"></span> </div> <span class="source"></span> </div> <div class="review-data"> <div class="date"></div><div class="review-stars"></div></div><div class="review-text"><blockquote></blockquote></div></div>',
+    var reviewRowTmpl = '<div class="reviews-requiring-attention-row"> <div class="review-icon"> <div class="thumbnail"> <span class="source-image"><span class="icon"></span></span> </div> <span class="source"></span> </div> <div class="review-data"> <div class="date"></div><div class="review-stars"></div></div><div class="review-text"><blockquote></blockquote></div></div>',
       reviewProviderSetTmpl = '<div class="reviews-requiring-attention" ><div class="provider-header content-row-header">Reviews requiring attention on <span class="provider-name"><span></div><div class="provider-content"></div></div>',
       reviewTotalRowTmpl = '<div class="reviews-requiring-total"><div class="review-elem-total-provider"></div><div class="review-elem-total-number"></div></div>';
 
@@ -240,9 +270,19 @@ $(function () {
     }
   }
 
+  proccessingSocialMediaData();
+
   renderTrendChart("reviews", "Total reviews", pageData.totalReviews, getFlotTrendOptions("#f5ae30"));
   renderTrendChart("star-rating", "Average star rating", pageData.averageStarRating, getFlotTrendOptions("#e56961"));
+  renderTrendChart("social-media", "Social Media Listings", pageData.socialMedia, getFlotTrendOptions("#0000ff"));
   renderTrendChart("bar-chart", "Star rating distribution", pageData.starRatingDistribution, getFlotBarOptions());
+
+  //In the page template, it's being assumed that no provider was listed. Showing in the report 
+  //  the providers that actually were found listed.
+  for(var elem in pageData.socialMedia.providersListed) {
+    $(".icons .thumbnail .source-" + elem + " .icon").removeClass("not-found");
+    $(".icons .thumbnail .source-" + elem + " .icon").siblings().remove();
+  }
   
   if(pageData.reviewsRequiringAttention && !jQuery.isEmptyObject(pageData.reviewsRequiringAttention)){
     renderReviewSections(pageData.reviewsRequiringAttention);
