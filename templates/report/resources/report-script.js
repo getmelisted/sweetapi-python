@@ -64,18 +64,23 @@ $(function () {
   };
 
   function proccessingSocialMediaData(){
-    var providersListed = {},
-      totalListed = 0, elem;
-    
+    var content = "",
+      tmpl = '<span class="source-image source-{{source}}"><span class="icon not-found"></span><span class="not-found-btn">&times;</span><span class="provider-source">{{source}}</span></span>',
+      totalListed = 0, elem, iconObj;
+      
     for (var i = 0, ii = pageData.socialMedia.providers.length; i < ii; i++){
       elem = pageData.socialMedia.providers[i];
+
+      iconObj = $(tmpl.replace(/{{source}}/ig,elem.provider.toLowerCase()));
+      
       if(elem.listing){
-        providersListed[elem.provider.toLowerCase()] = elem.provider;
+        iconObj.find(".icon").removeClass("not-found")
+          .siblings(".not-found-btn").remove();
         totalListed++;
       }
+      $("#social-media .thumbnail").append(iconObj);
     }
-    pageData.socialMedia.headerValue = totalListed + " / " + pageData.socialMedia.providers.length;
-    pageData.socialMedia.providersListed = providersListed;
+    pageData.socialMedia.headerValue = totalListed + "/" + pageData.socialMedia.providers.length;
   }
 
   //convert the date in a readable string, with format: Month Day Year (removing day of the week)
@@ -270,19 +275,12 @@ $(function () {
     }
   }
 
-  proccessingSocialMediaData();
+  proccessingSocialMediaData();//and adding icons in the header of the Social Media Chart
 
   renderTrendChart("reviews", "Total reviews", pageData.totalReviews, getFlotTrendOptions("#f5ae30"));
   renderTrendChart("star-rating", "Average star rating", pageData.averageStarRating, getFlotTrendOptions("#e56961"));
   renderTrendChart("social-media", "Social Media Listings", pageData.socialMedia, getFlotTrendOptions("#0000ff"));
   renderTrendChart("bar-chart", "Star rating distribution", pageData.starRatingDistribution, getFlotBarOptions());
-
-  //In the page template, it's being assumed that no provider was listed. Showing in the report 
-  //  the providers that actually were found listed.
-  for(var elem in pageData.socialMedia.providersListed) {
-    $(".icons .thumbnail .source-" + elem + " .icon").removeClass("not-found");
-    $(".icons .thumbnail .source-" + elem + " .icon").siblings().remove();
-  }
   
   if(pageData.reviewsRequiringAttention && !jQuery.isEmptyObject(pageData.reviewsRequiringAttention)){
     renderReviewSections(pageData.reviewsRequiringAttention);

@@ -51,7 +51,7 @@
 }
 
 .chart-header .text {
-  width: 20%; /*if you change the width of the content, propably have to change this*/
+  width: 18%; /*if you change the width of the content, propably have to change this*/
   margin-top: 10px;
 }
 
@@ -125,10 +125,15 @@
   line-height:24px;
 }
 
-.icons {
+
+.chart-header .icons {
   padding-top:10px;
+  padding-right: 0px;
 }
 
+.icons .thumbnail {
+  padding-right: 0px;
+}
 .icons .thumbnail .not-found {
   opacity: 0.2;
 }
@@ -136,8 +141,9 @@
 .icons .thumbnail .source-image {
   position:relative;
   display: inline-block;
-  height: 40px;
+  height: 50px;
   width: 40px;
+  margin-right:15px;
 }
 
 .icons .thumbnail .source-image .not-found-btn{
@@ -150,6 +156,18 @@
   right: 0px;
   top:0px;
   padding: 2px;
+}
+
+.icons .thumbnail .source-image .provider-source {
+  bottom: 0px;
+  right:0px;
+  font-size: 8px;
+  font-style: normal;
+  line-height: 10px;
+  position: absolute;
+  text-align: center;
+  width: 40px;
+  text-transform:capitalize;
 }
 
 /*reviews requiring attention by source*/
