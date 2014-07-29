@@ -14,6 +14,32 @@
     }
   }
 
+  var listingsData = []
+  var reviewsData = [];
+
+  var listingsDatatable = $('.listing-collection-view-container').dataTable( {
+    "data": listingsData,
+    "columns": [
+      { "title": "Domain" },
+      { "title": "Status" },
+      { "title": "Address" },
+      { "title": "Phone"},
+      { "title": "Source", "class": "center" }
+    ]
+  } );
+
+  var reviewsDatatable = $('.review-collection-view-container').dataTable( {
+    "data": reviewsData,
+    "columns": [
+      { "title": "Domain" },
+      { "title": "Rating" },
+      { "title": "Author" },
+      { "title": "Date"},
+      { "title": "Excerpt"},
+      { "title": "Source", "class": "center" }
+    ]
+  } );
+
   var ViewUtilities = {
     getTemplate: function (template) {
       return $.ajax({
@@ -212,6 +238,19 @@
       return $.when({locationReceived: true});
     },
     receivedListings: function (listings) {
+      for (var i = 0 , ii = listings.length; i < ii; i++) {
+        var item = listings[i];
+        var sourceButton = '<div class="ui buttons"><a href="' + item.link + '" target="_blank" class="ui mini button blue view-listing">View listing</a></div>';
+        var alreadyAdded = !!listingsData[item.id-1];
+        listingsData[item.id-1] = [item.domain, item.status, item.address, item.phone, sourceButton];
+        if(!alreadyAdded) {
+          listingsDatatable.add(listingsData[item.id-1]);
+        }
+      }
+
+      listingsDatatable.draw();
+
+             /*
       this.closeListingViews();
 
       for (var i = 0 , ii = listings.length; i < ii; i++) {
@@ -221,9 +260,22 @@
 
         this.$el.find('.listing-collection-view-container tbody').append(v.el);
       }
-
+               */
     },
     receivedReviews: function (reviews) {
+      for (var i = 0 , ii = listings.length; i < ii; i++) {
+        var item = listings[i];
+        var sourceButton = '<div class="ui buttons"><a href="' + item.link + '" target="_blank" class="ui mini button blue view-review">View Review</a></div>';
+        var alreadyAdded = !!listingsData[item.id-1];
+        reviewsData[item.id-1] = [item.provider, item.rating, item.author, item.date, item.excerpt, sourceButton];
+        if(!alreadyAdded) {
+          reviewsDatatable.add(reviewsData[item.id-1]);
+        }
+      }
+
+      reviewsDatatable.draw();
+
+/*
       this.closeReviewViews();
 
       for (var i = 0 , ii = reviews.length; i < ii; i++) {
@@ -233,6 +285,7 @@
 
         this.$el.find('.review-collection-view-container tbody').append(v.el);
       }
+*/
     },
     renderData: function () {
       ViewUtilities.renderData(this, this.data, {
