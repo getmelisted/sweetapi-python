@@ -5,6 +5,8 @@
 (function () {
 
   var API_KEY_QUERY_STRING = '?api_key=YOUR_API_KEY__CHANGE_ME';
+  var renderedListings = {};
+  var renderedReviews = {};
 
   // Lightweight shim for those users that don't have a console
   if (typeof console === "undefined") {
@@ -215,6 +217,11 @@
       this.closeListingViews();
 
       for (var i = 0 , ii = listings.length; i < ii; i++) {
+        var listingId = listings[i].unique_hash
+        if (renderedListings[listingId]){
+          continue;
+        }
+        renderedListings[listingId] = true;
         var v = new ListingItemView({
           data: listings[i]
         }).initialize();
@@ -227,6 +234,12 @@
       this.closeReviewViews();
 
       for (var i = 0 , ii = reviews.length; i < ii; i++) {
+        var reviewId = reviews[i].review_id
+        if (renderedReviews[reviewId]){
+          continue;
+        }
+        renderedReviews[reviewId] = true;
+
         var v = new ReviewItemView({
           data: reviews[i]
         }).initialize();
@@ -283,6 +296,9 @@
 
   var ListingItemView = function (opts) {
     this.template = ApplicationTemplates.listingCollectionItem;
+    if(/not me/i.test(opts.data.status)){
+      opts.data.status ="Potential Competitor";
+    }
     this.data = opts.data;
     this.tagName = 'tr';
     ViewUtilities.initializeView(this, opts);
