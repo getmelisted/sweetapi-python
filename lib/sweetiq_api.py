@@ -11,9 +11,8 @@ class SweetiqAPI:
     def __init__(self, requests):
         self.requests = requests
 
-    def run_location(self, location_data):
-        url = '%s%s?api_key=%s' % (config.sweetiq_api_url, 'advance-it', config.sweetiq_api_key)
-
+    def run_location(self, location_data, account_api_key=config.sweetiq_api_key):
+        url = '%s%s?api_key=%s' % (config.sweetiq_api_url, 'presence-api', account_api_key)
         payload = {
             'location': json.dumps(location_data),
             'listing_callback_url': config.sweetiq_api_listing_callback_url,
