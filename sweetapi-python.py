@@ -29,7 +29,7 @@ def run_location():
     for key in ['name', 'address', 'city', 'province', 'country', 'postal', 'phone']:
         location_data[key] = flask.request.form[key]
 
-    result = sweetiqApi.run_location(location_data)
+    result = sweetiqApi.run_location(location_data, flask.request.form["account_api_key"])
 
     if 'success' not in result or not result['success']:
         app.logger.error('Failed to trigger run location request to sweetiQ API', result)
