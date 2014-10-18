@@ -221,7 +221,7 @@
         if (renderedListings[listingId]){
           continue;
         }
-        renderedListings[listingId] = true;
+        renderedListings[listingId] = listings[i];
         var v = new ListingItemView({
           data: listings[i]
         }).initialize();
@@ -238,12 +238,16 @@
         if (renderedReviews[reviewId]){
           continue;
         }
-        renderedReviews[reviewId] = true;
+        renderedReviews[reviewId] = reviews[i];
 
         var v = new ReviewItemView({
           data: reviews[i]
         }).initialize();
+        var isVerified = /verified/i.test(renderedListings[reviews[i].listing].status)
 
+        if (isVerified) {
+           v.el.css({'background-color':'#F1F1F1','color':'#4EAFD5'})
+        }
         this.$el.find('.review-collection-view-container tbody').append(v.el);
       }
     },
