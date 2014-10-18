@@ -221,7 +221,7 @@
         if (renderedListings[listingId]){
           continue;
         }
-        renderedListings[listingId] = listings[i];
+        renderedListings[listingId] = renderedListings[listings[i].id] = listings[i];
         var v = new ListingItemView({
           data: listings[i]
         }).initialize();
@@ -243,7 +243,7 @@
         var v = new ReviewItemView({
           data: reviews[i]
         }).initialize();
-        var isVerified = /verified/i.test(renderedListings[reviews[i].listing].status)
+        var isVerified = reviews[i].listing && renderedListings[reviews[i].listing] && /verified/i.test(renderedListings[reviews[i].listing].status)
 
         if (isVerified) {
            v.el.css({'background-color':'#F1F1F1','color':'#4EAFD5'})
