@@ -4,9 +4,7 @@
 
 (function () {
 
-  var API_KEY_QUERY_STRING = '?api_key=YOUR_API_KEY__CHANGE_ME';
-  var renderedListings = {};
-  var renderedReviews = {};
+  var API_KEY_QUERY_STRING = '?api_key=3D94hMr2';
 
   // Lightweight shim for those users that don't have a console
   if (typeof console === "undefined") {
@@ -179,6 +177,8 @@
     initialize: function () {
       this.$el.html(this.template);
       this.loadData();
+      this.renderedListings = {};
+      this.renderedReviews = {};
 
       this.refreshInterval = setInterval(this.loadData, 11000);
     },
@@ -218,10 +218,10 @@
 
       for (var i = 0 , ii = listings.length; i < ii; i++) {
         var listingId = listings[i].unique_hash
-        if (renderedListings[listingId]){
+        if (this.renderedListings[listingId]){
           continue;
         }
-        renderedListings[listingId] = renderedListings[listings[i].id] = listings[i];
+        this.renderedListings[listingId] = this.renderedListings[listings[i].id] = listings[i];
         var v = new ListingItemView({
           data: listings[i]
         }).initialize();
@@ -235,20 +235,21 @@
 
       for (var i = 0 , ii = reviews.length; i < ii; i++) {
         var reviewId = reviews[i].review_id
-        if (renderedReviews[reviewId]){
+        if (this.renderedReviews[reviewId]){
           continue;
         }
-        renderedReviews[reviewId] = reviews[i];
+        this.renderedReviews[reviewId] = reviews[i];
 
         var v = new ReviewItemView({
           data: reviews[i]
         }).initialize();
-        var isVerified = reviews[i].listing && renderedListings[reviews[i].listing] && /verified/i.test(renderedListings[reviews[i].listing].status)
 
+        var $el = this.$el.find('.review-collection-view-container tbody').append(v.el);
+
+        var isVerified = reviews[i].listing && this.renderedListings[reviews[i].listing] && /verified/i.test(this.renderedListings[reviews[i].listing].status)
         if (isVerified) {
-           v.el.css({'background-color':'#F1F1F1','color':'#4EAFD5'})
+          $el.css({'background-color':'#F1F1F1','color':'#4EAFD5'})
         }
-        this.$el.find('.review-collection-view-container tbody').append(v.el);
       }
     },
     renderData: function () {
