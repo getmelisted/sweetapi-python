@@ -4,7 +4,7 @@
 
 (function () {
 
-  var API_KEY_QUERY_STRING = '?api_key=3D94hMr2';
+  var API_KEY_QUERY_STRING = '?api_key=YOUR_API_KEY__CHANGE_ME';
 
   // Lightweight shim for those users that don't have a console
   if (typeof console === "undefined") {
