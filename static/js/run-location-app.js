@@ -244,11 +244,11 @@
           data: reviews[i]
         }).initialize();
 
-        var $el = this.$el.find('.review-collection-view-container tbody').append(v.el).last('tr');
+        var $el = this.$el.find('.review-collection-view-container tbody').append(v.el);
 
         var isVerified = reviews[i].listing && this.renderedListings[reviews[i].listing] && /verified/i.test(this.renderedListings[reviews[i].listing].status)
         if (isVerified) {
-          $el.css({'background-color':'#F1F1F1','color':'#4EAFD5'})
+          $el.children().last().css({'background-color':'#F1F1F1','color':'#4EAFD5'})
         }
       }
     },
