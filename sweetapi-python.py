@@ -26,7 +26,7 @@ def index():
 @requires_auth
 def run_location():
     location_data = {}
-    for key in ['name', 'address', 'city', 'province', 'country', 'postal', 'phone']:
+    for key in ['name', 'address', 'city', 'province', 'country', 'postal', 'phone', 'verified_cutoff']:
         location_data[key] = flask.request.form[key]
 
     result = sweetiqApi.run_location(location_data, flask.request.form["account_api_key"])
