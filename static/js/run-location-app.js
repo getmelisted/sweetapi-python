@@ -229,6 +229,9 @@
         this.$el.find('.listing-collection-view-container tbody').append(v.el);
       }
 
+      $("tr:has(td:contains('verified'))").each(function(){
+        $(this).css({'background-color':'#F1F1F1','color':'#4EAFD5'})
+      });
     },
     receivedReviews: function (reviews) {
       this.closeReviewViews();
