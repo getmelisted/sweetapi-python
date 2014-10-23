@@ -88,6 +88,7 @@ class Location(BaseModel):
 class Listing(BaseModel):
     id = PrimaryKeyField(primary_key=True, null=False)
     location = ForeignKeyField(Location, related_name='listings', null=False)
+    created_at = DateTimeField(default=datetime.datetime.now)
     name = CharField(null=True)
     status = CharField(null=True)
     unique_hash = CharField()
@@ -107,7 +108,7 @@ class Listing(BaseModel):
     @staticmethod
     def save_listing(location, unique_hash, listing_data):
 
-        accuracy = str(listing_data.get('accuracy',''))[:4]
+        accuracy = float(str(listing_data.get('accuracy','0.0'))[:4])
         try:
 
 
@@ -146,6 +147,7 @@ class Review(BaseModel):
     id = PrimaryKeyField(primary_key=True, null=False)
     location = ForeignKeyField(Location, related_name='reviews', null=False, )
     listing = ForeignKeyField(Listing, related_name='reviews', null=False)
+    created_at = DateTimeField(default=datetime.datetime.now)
     unique_hash = CharField()
     review_id = CharField()
     provider = CharField()
