@@ -94,7 +94,7 @@ class Listing(BaseModel):
     unique_hash = CharField()
     provider = CharField(null=True)
     domain = CharField(null=True)
-    accuracy = FloatField(null=True)
+    accuracy = FloatField(default=0)
     link = CharField(null=True)
     address = CharField(null=True)
     phone = CharField(null=True)

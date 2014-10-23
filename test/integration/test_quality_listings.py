@@ -64,7 +64,7 @@ class MyTestCase(unittest.TestCase):
 
             return listing.count() > 0
         except Exception as e:
-            print 'Explosion' + e.message
+            print 'Explosion: ' + e.message
             return False
 
 if __name__ == '__main__':

@@ -30,7 +30,7 @@ class MyTestCase(unittest.TestCase):
 
             return reviews.count() > 0
         except Exception as e:
-            print 'Explosion' + e.message
+            print 'Explosion: ' + e.message
 
         return False
 
