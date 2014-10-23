@@ -228,10 +228,6 @@
 
         this.$el.find('.listing-collection-view-container tbody').append(v.el);
       }
-
-      $("tr:has(td:contains('verified'))").each(function(){
-        $(this).css({'background-color':'#F1F1F1','color':'#4EAFD5'})
-      });
     },
     receivedReviews: function (reviews) {
       this.closeReviewViews();
@@ -246,13 +242,6 @@
         var v = new ReviewItemView({
           data: reviews[i]
         }).initialize();
-
-        var $el = this.$el.find('.review-collection-view-container tbody').append(v.el);
-
-        var isVerified = reviews[i].listing && this.renderedListings[reviews[i].listing] && /verified/i.test(this.renderedListings[reviews[i].listing].status)
-        if (isVerified) {
-          $el.children().last().css({'background-color':'#F1F1F1','color':'#4EAFD5'})
-        }
       }
     },
     renderData: function () {
@@ -296,6 +285,10 @@
     renderData: function () {
       ViewUtilities.renderData(this, this.data);
       this.$el.find('a.view-review').attr('href', this.data.link);
+
+      if ($('.verified.'+ this.data.listing).length) {
+        this.$el.addClass('verified ' +this.data.listing);
+      }
     },
     close: function () {
       ViewUtilities.closeView(this);
@@ -320,8 +313,13 @@
     },
     renderData: function () {
       ViewUtilities.renderData(this, this.data);
-
+      if (/verified/i.test(this.data.status)) {
+        this.$el.addClass('verified ' + this.data.id);
+      }
       this.$el.find('a.view-listing').attr('href', this.data.link);
+      this.$el.find('td:eq(0)').click(function(){
+        $('.review tr').not('.' + this.data.listing).toggle()
+      })
     },
     close: function () {
       ViewUtilities.closeView(this);

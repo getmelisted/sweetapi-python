@@ -18,6 +18,11 @@ body {
   text-align: center;
 }
 
+.verified{
+    background-color:#F1F1F1;
+    color:#4EAFD5;
+}
+
 #app-container{
   padding: 45px 18px 0;
 }

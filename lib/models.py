@@ -107,7 +107,9 @@ class Listing(BaseModel):
     @staticmethod
     def save_listing(location, unique_hash, listing_data):
 
+        accuracy = str(listing_data.get('accuracy',''))[:4]
         try:
+
 
             listing = Listing.get(Listing.location == location, Listing.unique_hash == unique_hash)
 
@@ -116,7 +118,7 @@ class Listing(BaseModel):
             listing.status = listing_data.get('status')
             listing.provider = listing_data.get('provider')
             listing.domain = listing_data.get('domain')
-            listing.accuracy = listing_data.get('accuracy')
+            listing.accuracy = accuracy
             listing.link = listing_data.get('link')
             listing.address = listing_data.get('address')
             listing.phone = listing_data.get('phone')
@@ -130,7 +132,7 @@ class Listing(BaseModel):
                               status=listing_data.get('status'),
                               provider=listing_data.get('provider'),
                               domain=listing_data.get('domain'),
-                              accuracy=listing_data.get('accuracy'),
+                              accuracy=accuracy,
                               link=listing_data.get('link'),
                               address=listing_data.get('address'),
                               phone=listing_data.get('phone'))
@@ -165,7 +167,7 @@ class Review(BaseModel):
 
         if not listing:
             # Stub out a listing since we haven't received its information yet
-            listing = Listing.save_listing(location, review_data['unique_hash'], {})
+            listing = Listing.save_listing(location, review_data['unique_hash'], {'address':'For reviews without associated listing!'})
 
         try:
 
