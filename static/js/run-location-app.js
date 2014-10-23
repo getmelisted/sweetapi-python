@@ -319,9 +319,11 @@
         this.$el.addClass('verified ' + this.data.id);
       }
       this.$el.find('a.view-listing').attr('href', this.data.link);
-      listingId =  this.data.listing;
       this.$el.find('td:eq(0)').click(function(){
-        $('.review-collection-view-container tr').not('.' + listingId).toggle()
+        var listingId = $(this).parent('tr').attr('class').replace(/\D*/g,'');
+        if(listingId){
+          $('.review-collection-view-container tr').not('.' + listingId).toggle()
+        }
       })
     },
     close: function () {
