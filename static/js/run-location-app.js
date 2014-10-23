@@ -321,7 +321,7 @@
       this.$el.find('a.view-listing').attr('href', this.data.link);
       listingId =  this.data.listing;
       this.$el.find('td:eq(0)').click(function(){
-        $('.review tr').not('.' + listingId).toggle()
+        $('.review-collection-view-container tr').not('.' + listingId).toggle()
       })
     },
     close: function () {
