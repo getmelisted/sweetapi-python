@@ -242,6 +242,8 @@
         var v = new ReviewItemView({
           data: reviews[i]
         }).initialize();
+
+        this.$el.find('.review-collection-view-container tbody').append(v.el);
       }
     },
     renderData: function () {
