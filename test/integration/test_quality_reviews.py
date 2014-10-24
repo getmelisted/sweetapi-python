@@ -9,10 +9,42 @@ import unittest
 
 class MyTestCase(unittest.TestCase):
 
-    global few_hours_ago
+    global few_hours_ago, expected_review_providers
+    expected_review_providers = [
+        "google",
+        "bing",
+        "yahoo",
+        "yelp",
+        "yellowpages",
+        "411",
+        "n49",
+        "facebook",
+        "foursquare",
+        "tripadvisor",
+        "urbanspoon",
+        "restaurantica",
+        "expedia",
+        "canadaplus",
+        "canpages",
+        "dinehere",
+        "canadianhotelguide",
+        "lonelyplanet"
+    ]
+
     few_hours_ago = datetime.now() - timedelta(hours=6)
 
-    def ensure_recent_reviews_are_complete(self, provider, has_rating=True, has_author=True,has_date=True, has_excerpt=True):
+    def test_reviews_from_today_exist(self):
+        successCount = expectedCount = len(expected_review_providers)
+        for provider in expected_review_providers:
+            is_complete = self.are_recent_reviews_complete(provider)
+            if not is_complete :
+                successCount -= 1
+                print("Expected to find a complete listing from the provider:" + provider)
+
+        self.assertEqual(successCount, expectedCount, "Expected to find complete listings for every provider today")
+
+
+    def are_recent_reviews_complete(self, provider, has_rating=True, has_author=True,has_date=True, has_excerpt=True):
 
         reviews = Review.select().where(Review.provider == provider).where(Review.created_at > few_hours_ago)
         if has_rating:
@@ -28,32 +60,6 @@ class MyTestCase(unittest.TestCase):
             reviews = reviews.select().where(~(Review.excerpt >> None)).where(Review.excerpt.regexp(".{10,}"))
 
         return reviews.count() > 0
-
-
-    def test_recent_reviews_are_complete_for_google(self):
-        provider = "google"
-        has_complete = self.ensure_recent_reviews_are_complete(provider)
-        self.assertTrue(has_complete, "Expected to find a valid review from the provider:" + provider)
-
-    def test_recent_reviews_are_complete_for_facebook(self):
-        provider = "facebook"
-        has_complete = self.ensure_recent_reviews_are_complete(provider)
-        self.assertTrue(has_complete, "Expected to find a valid review from the provider:" + provider)
-
-    def test_recent_reviews_are_complete_for_yahoo(self):
-        provider = "yahoo"
-        has_complete = self.ensure_recent_reviews_are_complete(provider)
-        self.assertTrue(has_complete, "Expected to find a valid review from the provider:" + provider)
-
-    def test_recent_reviews_are_complete_for_bing(self):
-        provider = "bing"
-        has_complete = self.ensure_recent_reviews_are_complete(provider)
-        self.assertTrue(has_complete, "Expected to find a valid review from the provider:" + provider)
-
-    def test_recent_reviews_are_complete_for_yelp(self):
-        provider = "yelp"
-        has_complete = self.ensure_recent_reviews_are_complete(provider)
-        self.assertTrue(has_complete, "Expected to find a valid review from the provider:" + provider)
 
 
 if __name__ == '__main__':
