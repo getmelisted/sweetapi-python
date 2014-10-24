@@ -47,25 +47,21 @@ class MyTestCase(unittest.TestCase):
 
     def are_recent_listings_complete(self, provider, has_name=True, has_address=True, has_phone=True, has_accuracy=True):
 
-        try:
-            listing = Listing.select().where(Listing.provider == provider).where(Listing.created_at > few_hours_ago)
+        listing = Listing.select().where(Listing.provider == provider).where(Listing.created_at > few_hours_ago)
 
-            if listing.count() and has_name:
-                listing = listing.select().where(Listing.name.regexp("\w{3,}"))
+        if has_name:
+            listing = listing.select().where(~(Listing.name >> None)).where(Listing.name.regexp("\w{3,}"))
 
-            if listing.count() and has_address:
-                listing = listing.select().where(Listing.address.regexp(".*\w{4,}"))
+        if has_phone:
+            listing = listing.select().where(~(Listing.address >> None)).where(Listing.address.regexp(".*\w{4,}"))
 
-            if listing.count() and has_phone:
-                listing = listing.select().where(Listing.phone.regexp("\D*\d{3}.?\d\d.?\d\d"))
+        if has_phone:
+            listing = listing.select().where(~(Listing.phone >> None)).where(Listing.phone.regexp("\D*\d{3}.?\d\d.?\d\d"))
 
-            if listing.count() and has_accuracy:
-                listing = listing.select().where(Listing.accuracy >= 0.7)
+        if has_accuracy:
+            listing = listing.select().where(Listing.accuracy >= 0.7)
 
-            return listing.count() > 0
-        except Exception as e:
-            print 'Explosion: ' + e.message
-            return False
+        return listing.count() > 0
 
 if __name__ == '__main__':
     unittest.main()

@@ -14,25 +14,20 @@ class MyTestCase(unittest.TestCase):
 
     def ensure_recent_reviews_are_complete(self, provider, has_rating=True, has_author=True,has_date=True, has_excerpt=True):
 
-        try:
-            reviews = Review.select().where(Review.provider == provider).where(Review.created_at > few_hours_ago)
-            if reviews.count() and has_rating:
-                reviews = reviews.select().where(Review.rating > 0)
+        reviews = Review.select().where(Review.provider == provider).where(Review.created_at > few_hours_ago)
+        if has_rating:
+            reviews = reviews.select().where(Review.rating > 0)
 
-            if reviews.count() and has_author:
-                reviews = reviews.select().where(Review.author.regexp(".{3,}"))
+        if has_author:
+            reviews = reviews.select().where(~(Review.author >> None)).where(Review.author.regexp(".{3,}"))
 
-            if reviews.count() and has_date:
-                reviews = reviews.select().where(Review.date.regexp("\D*\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d"))
+        if has_date:
+            reviews = reviews.select().where(~(Review.date >> None)).where(Review.date.regexp("\D*\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d"))
 
-            if reviews.count() and has_excerpt:
-                reviews = reviews.select().where(Review.excerpt.regexp(".{10,}"))
+        if has_excerpt:
+            reviews = reviews.select().where(~(Review.excerpt >> None)).where(Review.excerpt.regexp(".{10,}"))
 
-            return reviews.count() > 0
-        except Exception as e:
-            print 'Explosion: ' + e.message
-
-        return False
+        return reviews.count() > 0
 
 
     def test_recent_reviews_are_complete_for_google(self):

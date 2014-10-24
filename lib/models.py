@@ -9,6 +9,10 @@ database = SqliteDatabase('location_data.db')
 database.connect()
 
 
+import logging
+logger = logging.getLogger('peewee')
+logger.setLevel(logging.WARN)
+
 class BaseModel(Model):
     class Meta:
         database = database
@@ -94,7 +98,7 @@ class Listing(BaseModel):
     unique_hash = CharField()
     provider = CharField(null=True)
     domain = CharField(null=True)
-    accuracy = FloatField(default=0)
+    accuracy = FloatField(null=False,default=0)
     link = CharField(null=True)
     address = CharField(null=True)
     phone = CharField(null=True)
@@ -154,7 +158,7 @@ class Review(BaseModel):
     date = DateTimeField(null=True)
     author = CharField(null=True)
     author_id = CharField(null=True)
-    rating = FloatField(null=True)
+    rating = FloatField(null=False,default=0)
     link = CharField(null=True)
     excerpt = CharField(null=True)
 
