@@ -7,6 +7,8 @@ import requests
 from lib.sweetiq_api import SweetiqAPI
 
 import unittest
+from lib.models import Location
+
 
 class MyTestCase(unittest.TestCase):
 
@@ -34,3 +36,5 @@ class MyTestCase(unittest.TestCase):
         result = sweetiqApi.run_location(location_data, "", verified_cutoff)
 
         self.assertFalse('success' not in result or not result['success'],'Failed to trigger run location request to sweetiQ API' + str(result))
+        token_id = result['token_id']
+        Location.create_location(token_id, location_data)
