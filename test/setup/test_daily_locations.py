@@ -33,4 +33,4 @@ class MyTestCase(unittest.TestCase):
 
         result = sweetiqApi.run_location(location_data, "", verified_cutoff)
 
-        self.assertFalse('success' not in result or not result['success'],'Failed to trigger run location request to sweetiQ API')
+        self.assertFalse('success' not in result or not result['success'],'Failed to trigger run location request to sweetiQ API' + str(result))
