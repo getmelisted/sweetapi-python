@@ -39,9 +39,9 @@ class MyTestCase(unittest.TestCase):
             is_complete = self.are_recent_reviews_complete(provider)
             if not is_complete :
                 successCount -= 1
-                print("Expected to find a complete listing from the provider:" + provider)
+                print("Expected to find a complete reviews from the provider:" + provider)
 
-        self.assertEqual(successCount, expectedCount, "Expected to find complete listings for every provider today")
+        self.assertEqual(successCount, expectedCount, "Expected to find complete reviews for every provider today")
 
 
     def are_recent_reviews_complete(self, provider, has_rating=True, has_author=True,has_date=True, has_excerpt=True):
