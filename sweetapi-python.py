@@ -26,10 +26,15 @@ def index():
 @requires_auth
 def run_location():
     location_data = {}
+    nap_weights = {"name":1.0, "street":1.0, "city":0.2, "province":0.2, "postal":0.3, "country":1.0, "phone":1.0}
     for key in ['name', 'address', 'city', 'province', 'country', 'postal', 'phone']:
         location_data[key] = flask.request.form[key]
 
-    result = sweetiqApi.run_location(location_data, flask.request.form["account_api_key"], flask.request.form.get("verified_cutoff",""))
+    for key in ['name_weight', 'street_weight', 'city_weight', 'province_weight', 'country_weight', 'postal_weight', 'phone_weight']:
+        nap_key = key.replace('_weight','')
+        nap_weights[nap_key] = flask.request.form[key] if (flask.request.form[key]) else 0.0
+
+    result = sweetiqApi.run_location(location_data, flask.request.form["account_api_key"], flask.request.form.get("verified_cutoff",""), nap_weights)
 
     if 'success' not in result or not result['success']:
         app.logger.error('Failed to trigger run location request to sweetiQ API', result)

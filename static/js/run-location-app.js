@@ -352,7 +352,15 @@
         province: 'Quebec',
         country: 'Canada',
         postal: 'H2W 1L2',
-        phone: '(514) 842-4813'
+        phone: '(514) 842-4813',
+        verified_cutoff: '0.7',
+        name_weight: '1.0',
+        street_weight: '1.0',
+        city_weight: '0.2',
+        province_weight: '0.2',
+        country_weight: '1.0',
+        postal_weight: '0.3',
+        phone_weight: '1.0'
       };
 
       var ctx = this;
