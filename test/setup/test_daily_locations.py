@@ -19,21 +19,31 @@ class MyTestCase(unittest.TestCase):
         verified_cutoff= 0.7
 
         locations = [
-            {"name":"Lasik MD","address":"1801 Hollis Street Suite 400", "city":"Halifax", "province": "NS", "country" :"Canada", "postal":"B3J3N4","phone":"1-902-4425050"},
+            {"name":"Coast Victoria Harbourside Hotel","address":"146 Kingston St", "city":"Victoria", "province": "BC", "country" :"Canada", "postal":"V8V 1V4","phone":"(250) 360-1211"},
             {"name":"Ariadne Hair & Esthetics","address":"29 Crowfoot Rise", "city":"Calgary", "province": "AB","country" :"Canada",  "postal":"T3G 4P5","phone":"403-208-7355"},
             {"name":"Myth Games","address":"3434 34 Ave NE #4", "city":"Calgary", "province": "AB","country" :"Canada",  "postal":"T1Y 6X3","phone":"403-769-1909"},
             {"name":"Carol A Gogo","address":"16 Rue de la Gare", "city":"Saint-Sauveur-des-Monts", "province": "Quebec","country" :"Canada",  "postal":"J0R 1R0","phone":"450-227-8660"},
-            {"name":"Union Oyster House","address":"41 Union St", "city":"Boston", "province": "MA","country" :"United States",  "postal":"02108","phone":"(617) 227-2750"}
+            {
+                "name":"Union Oyster House","address":"41 Union St", "city":"Boston", "province": "MA","country" :"United States",  "postal":"02108","phone":"(617) 227-2750"}
         ]
 
+        validation_weights = {
+             "name": 1.0,
+             "address": 1.0,
+             "city": 0.2,
+             "province": 0.3,
+             "country": 1.0,
+             "postal": 0.2,
+             "phone": 1.0
+         }
 
         for location_data in locations:
-            self.launch_location_run(location_data, verified_cutoff)
+            self.launch_location_run(location_data, verified_cutoff, validation_weights)
 
 
-    def launch_location_run(self, location_data, verified_cutoff=0.7):
+    def launch_location_run(self, location_data, verified_cutoff=0.7, validation_weights = {}):
 
-        result = sweetiqApi.run_location(location_data, "", verified_cutoff)
+        result = sweetiqApi.run_location(location_data, "", verified_cutoff, validation_weights)
 
         self.assertFalse('success' not in result or not result['success'],'Failed to trigger run location request to sweetiQ API' + str(result))
         token_id = result['token_id']
