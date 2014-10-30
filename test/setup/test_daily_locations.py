@@ -23,8 +23,7 @@ class MyTestCase(unittest.TestCase):
             {"name":"Ariadne Hair & Esthetics","address":"29 Crowfoot Rise", "city":"Calgary", "province": "AB","country" :"Canada",  "postal":"T3G 4P5","phone":"403-208-7355"},
             {"name":"Myth Games","address":"3434 34 Ave NE #4", "city":"Calgary", "province": "AB","country" :"Canada",  "postal":"T1Y 6X3","phone":"403-769-1909"},
             {"name":"Carol A Gogo","address":"16 Rue de la Gare", "city":"Saint-Sauveur-des-Monts", "province": "Quebec","country" :"Canada",  "postal":"J0R 1R0","phone":"450-227-8660"},
-            {
-                "name":"Union Oyster House","address":"41 Union St", "city":"Boston", "province": "MA","country" :"United States",  "postal":"02108","phone":"(617) 227-2750"}
+            {"name":"Forget Me Not Cafe","address":"883 Wilson Avenue", "city":"Toronto", "province": "ON","country" :"Canada",  "postal":"M3K1E6","phone":"(647) 627-0883"}
         ]
 
         validation_weights = {
