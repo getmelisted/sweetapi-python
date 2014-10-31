@@ -24,12 +24,12 @@ class MyTestCase(unittest.TestCase):
         "urbanspoon",
         "restaurantica",
         "expedia",
-        "canadaplus",
         "canpages",
         "dinehere",
         "canadianhotelguide",
         "lonelyplanet"
     ]
+    # unsearchable: Oct 31, 2014    "canadaplus",
 
     few_hours_ago = datetime.now() - timedelta(hours=6)
 

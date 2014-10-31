@@ -9,7 +9,7 @@ import unittest
 
 class MyTestCase(unittest.TestCase):
 
-    global few_hours_ago, expected_review_providers
+    global few_hours_ago, expected_review_providers, expected_without_ratings
     expected_review_providers = [
         "google",
         "bing",
@@ -19,16 +19,19 @@ class MyTestCase(unittest.TestCase):
         "411",
         "n49",
         "facebook",
-        "foursquare",
         "tripadvisor",
         "urbanspoon",
         "restaurantica",
         "expedia",
-        "canadaplus",
         "canpages",
         "dinehere",
         "canadianhotelguide",
         "lonelyplanet"
+    ]
+    # unsearchable: Oct 31, 2014    "canadaplus",
+
+    expected_without_ratings = [
+        "foursquare",
     ]
 
     few_hours_ago = datetime.now() - timedelta(hours=6)
@@ -42,6 +45,16 @@ class MyTestCase(unittest.TestCase):
                 print("Expected to find a complete reviews from the provider:" + provider)
 
         self.assertEqual(successCount, expectedCount, "Expected to find complete reviews for every provider today")
+
+    def test_reviews_from_today_without_ratings_exist(self):
+        successCount = expectedCount = len(expected_without_ratings)
+        for provider in expected_without_ratings:
+            is_complete = self.are_recent_reviews_complete(provider, False)
+            if not is_complete :
+                successCount -= 1
+                print("Expected to find a complete reviews from the provider:" + provider)
+
+        self.assertEqual(successCount, expectedCount, "Expected to find reviews just without ratings for : " + ", ".join(expected_without_ratings))
 
 
     def are_recent_reviews_complete(self, provider, has_rating=True, has_author=True,has_date=True, has_excerpt=True):
