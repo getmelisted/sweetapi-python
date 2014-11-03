@@ -13,6 +13,7 @@ class MyTestCase(unittest.TestCase):
     expected_review_providers = [
         "google",
         "yahoo",
+        "bing",
         "yelp",
         "yellowpages",
         "411",
@@ -34,7 +35,6 @@ class MyTestCase(unittest.TestCase):
     ]
 
     expected_without_author = [
-        "bing",
     ]
 
     few_hours_ago = datetime.now() - timedelta(hours=6)
@@ -87,6 +87,7 @@ class MyTestCase(unittest.TestCase):
         for provider in expected_without_author:
             is_missing = self.recent_reviews_are_missing_field(provider, False, True)
             if not is_missing :
+                actual_failed_providers.append(provider)
                 successCount -= 1
                 print("Expected to find all reviews without an author from the provider:" + provider)
 
