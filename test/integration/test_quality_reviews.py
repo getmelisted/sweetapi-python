@@ -6,6 +6,8 @@ from datetime import datetime, timedelta
 from lib.models import Review
 
 import unittest
+import lib
+import json
 
 class MyTestCase(unittest.TestCase):
 
@@ -96,6 +98,7 @@ class MyTestCase(unittest.TestCase):
     def are_recent_reviews_complete(self, provider, has_rating=True, has_author=True,has_date=True, has_excerpt=True):
 
         reviews = Review.select().where(Review.provider == provider).where(Review.created_at > few_hours_ago)
+        print json.dumps(reviews)
         if has_rating:
             reviews = reviews.select().where(Review.rating > 0)
 

@@ -23,13 +23,13 @@ class MyTestCase(unittest.TestCase):
         "tripadvisor",
         "urbanspoon",
         "restaurantica",
-        "expedia",
         "canpages",
         "dinehere",
         "canadianhotelguide",
         "lonelyplanet"
     ]
     # unsearchable: Oct 31, 2014    "canadaplus",
+    # moving to API: "expedia",
 
     expected_review_providers = [
         "google",
@@ -44,12 +44,13 @@ class MyTestCase(unittest.TestCase):
         "tripadvisor",
         "urbanspoon",
         "restaurantica",
-        "expedia",
         "canpages",
         "dinehere",
         "canadianhotelguide",
     ]
     # no reviews:    "lonelyplanet"
+    # moving to API: "expedia",
+
     few_hours_ago = datetime.now() - timedelta(hours=6)
 
 

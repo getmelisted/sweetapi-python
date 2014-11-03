@@ -6,6 +6,7 @@ from datetime import datetime, timedelta
 from lib.models import Listing
 
 import unittest
+import json
 
 class MyTestCase(unittest.TestCase):
 
@@ -23,7 +24,6 @@ class MyTestCase(unittest.TestCase):
         "tripadvisor",
         "urbanspoon",
         "restaurantica",
-        "expedia",
         "canpages",
         "dinehere",
         "canadianhotelguide",
@@ -33,6 +33,7 @@ class MyTestCase(unittest.TestCase):
         "lonelyplanet"
     ]
     # unsearchable: Oct 31, 2014    "canadaplus",
+    # moving to API: "expedia",
 
     few_hours_ago = datetime.now() - timedelta(hours=6)
 
