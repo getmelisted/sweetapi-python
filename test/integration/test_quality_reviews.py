@@ -25,9 +25,9 @@ class MyTestCase(unittest.TestCase):
         "canpages",
         "dinehere",
         "canadianhotelguide",
-        "lonelyplanet"
     ]
     # unsearchable: Oct 31, 2014    "canadaplus",
+    # No reviews "lonelyplanet"
 
     expected_without_ratings = [
         "foursquare",
@@ -59,6 +59,18 @@ class MyTestCase(unittest.TestCase):
 
         self.assertEqual(successCount, expectedCount, "Expected to find reviews just without ratings for : " + ", ".join(expected_without_ratings))
 
+    def test_ensure_all_reviews_from_today_without_ratings(self):
+        successCount = expectedCount = len(expected_without_ratings)
+        actual_failed_providers = []
+        for provider in expected_without_ratings:
+            is_missing = self.recent_reviews_are_missing_field(provider, True)
+            if not is_missing :
+                actual_failed_providers.append(provider)
+                successCount -= 1
+                print("Expected to find all reviews without ratings from the provider:" + provider)
+
+        self.assertEqual(successCount, expectedCount, "Expected to find all reviews without ratings for : " + ", ".join(actual_failed_providers))
+
     def test_reviews_from_today_without_author_exist(self):
         successCount = expectedCount = len(expected_without_author)
         for provider in expected_without_author:
@@ -68,6 +80,17 @@ class MyTestCase(unittest.TestCase):
                 print("Expected to find a complete reviews without an author from the provider:" + provider)
 
         self.assertEqual(successCount, expectedCount, "Expected to find reviews just without an author for : " + ", ".join(expected_without_author))
+
+    def test_ensure_all_reviews_from_today_without_author(self):
+        successCount = expectedCount = len(expected_without_author)
+        actual_failed_providers = []
+        for provider in expected_without_author:
+            is_missing = self.recent_reviews_are_missing_field(provider, False, True)
+            if not is_missing :
+                successCount -= 1
+                print("Expected to find all reviews without an author from the provider:" + provider)
+
+        self.assertEqual(successCount, expectedCount, "Expected to find all reviews without an author for : " + ", ".join(actual_failed_providers))
 
     def are_recent_reviews_complete(self, provider, has_rating=True, has_author=True,has_date=True, has_excerpt=True):
 
@@ -86,6 +109,22 @@ class MyTestCase(unittest.TestCase):
 
         return reviews.count() > 0
 
+    def recent_reviews_are_missing_field(self, provider, has_no_rating=False, has_no_author=False, has_no_date=False, has_no_excerpt=False):
+
+        reviews = Review.select().where(Review.provider == provider).where(Review.created_at > few_hours_ago)
+        if has_no_rating:
+            reviews = reviews.select().where(~(Review.rating))
+
+        if has_no_author:
+            reviews = reviews.select().where(~(Review.author))
+
+        if has_no_date:
+            reviews = reviews.select().where(~(Review.date))
+
+        if has_no_excerpt:
+            reviews = reviews.select().where(~(Review.excerpt))
+
+        return reviews.count() == 0
 
 if __name__ == '__main__':
     unittest.main()

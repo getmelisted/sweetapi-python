@@ -48,8 +48,8 @@ class MyTestCase(unittest.TestCase):
         "canpages",
         "dinehere",
         "canadianhotelguide",
-        "lonelyplanet"
     ]
+    # no reviews:    "lonelyplanet"
     few_hours_ago = datetime.now() - timedelta(hours=6)
 
 
