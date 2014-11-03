@@ -24,13 +24,14 @@ class MyTestCase(unittest.TestCase):
         "tripadvisor",
         "urbanspoon",
         "restaurantica",
-        "expedia",
         "canpages",
         "dinehere",
         "canadianhotelguide",
     ]
     # unsearchable: Oct 31, 2014    "canadaplus",
     # No reviews "lonelyplanet"
+    # moving to API: "expedia",
+
 
     expected_without_ratings = [
         "foursquare",
@@ -44,7 +45,7 @@ class MyTestCase(unittest.TestCase):
     def test_reviews_from_today_exist(self):
         successCount = expectedCount = len(expected_review_providers)
         for provider in expected_review_providers:
-            is_complete = self.are_recent_reviews_complete(provider)
+            (is_complete,reviews) = self.are_recent_reviews_complete(provider)
             if not is_complete :
                 successCount -= 1
                 print("Expected to find a complete reviews from the provider:" + provider)
@@ -54,7 +55,7 @@ class MyTestCase(unittest.TestCase):
     def test_reviews_from_today_without_ratings_exist(self):
         successCount = expectedCount = len(expected_without_ratings)
         for provider in expected_without_ratings:
-            is_complete = self.are_recent_reviews_complete(provider, False)
+            (is_complete,reviews) = self.are_recent_reviews_complete(provider, False)
             if not is_complete :
                 successCount -= 1
                 print("Expected to find a complete reviews without ratings from the provider:" + provider)
@@ -65,7 +66,7 @@ class MyTestCase(unittest.TestCase):
         successCount = expectedCount = len(expected_without_ratings)
         actual_failed_providers = []
         for provider in expected_without_ratings:
-            is_missing = self.recent_reviews_are_missing_field(provider, True)
+            (is_missing,reviews) = self.recent_reviews_are_missing_field(provider, True)
             if not is_missing :
                 actual_failed_providers.append(provider)
                 successCount -= 1
@@ -76,7 +77,7 @@ class MyTestCase(unittest.TestCase):
     def test_reviews_from_today_without_author_exist(self):
         successCount = expectedCount = len(expected_without_author)
         for provider in expected_without_author:
-            is_complete = self.are_recent_reviews_complete(provider, True, False)
+            (is_complete,reviews) = self.are_recent_reviews_complete(provider, True, False)
             if not is_complete :
                 successCount -= 1
                 print("Expected to find a complete reviews without an author from the provider:" + provider)
@@ -87,7 +88,7 @@ class MyTestCase(unittest.TestCase):
         successCount = expectedCount = len(expected_without_author)
         actual_failed_providers = []
         for provider in expected_without_author:
-            is_missing = self.recent_reviews_are_missing_field(provider, False, True)
+            (is_missing,reviews) = self.recent_reviews_are_missing_field(provider, False, True)
             if not is_missing :
                 actual_failed_providers.append(provider)
                 successCount -= 1
@@ -98,7 +99,6 @@ class MyTestCase(unittest.TestCase):
     def are_recent_reviews_complete(self, provider, has_rating=True, has_author=True,has_date=True, has_excerpt=True):
 
         reviews = Review.select().where(Review.provider == provider).where(Review.created_at > few_hours_ago)
-        print reviews
         if has_rating:
             reviews = reviews.select().where(Review.rating > 0)
 
@@ -111,7 +111,7 @@ class MyTestCase(unittest.TestCase):
         if has_excerpt:
             reviews = reviews.select().where(~(Review.excerpt >> None)).where(Review.excerpt.regexp(".{10,}"))
 
-        return reviews.count() > 0
+        return (reviews.count() > 0, reviews)
 
     def recent_reviews_are_missing_field(self, provider, has_no_rating=False, has_no_author=False, has_no_date=False, has_no_excerpt=False):
 
@@ -128,7 +128,7 @@ class MyTestCase(unittest.TestCase):
         if has_no_excerpt:
             reviews = reviews.select().where(~(Review.excerpt))
 
-        return reviews.count() == 0
+        return (reviews.count() == 0, reviews)
 
 if __name__ == '__main__':
     unittest.main()
