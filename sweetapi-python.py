@@ -48,13 +48,13 @@ def run_location():
 @app.route('/api/location/listing', methods=['PUT', 'POST'])
 @requires_auth
 def accept_listing():
-    app.logger.debug('Received listing')
 
     listing = json.loads(flask.request.form['listing'])
     unique_hash = flask.request.form['unique_hash']
     listing['unique_hash'] = unique_hash
     token_id = flask.request.form['token_id']
 
+    app.logger.debug('Received listing', unique_hash)
     try:
         location = Location.get(Location.token_id == token_id)
         listing = Listing.save_listing(location, unique_hash, listing)
@@ -67,7 +67,6 @@ def accept_listing():
 @app.route('/api/location/review', methods=['PUT', 'POST'])
 @requires_auth
 def accept_review():
-    app.logger.debug('Received review')
 
     unique_hash = flask.request.form['unique_hash']
     token_id = flask.request.form['token_id']
@@ -75,6 +74,7 @@ def accept_review():
     review['provider'] = flask.request.form['provider']
     review['unique_hash'] = unique_hash
 
+    app.logger.debug('Received review', unique_hash)
     try:
         location = Location.get(Location.token_id == token_id)
         listing = None
