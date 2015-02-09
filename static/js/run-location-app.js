@@ -5,6 +5,7 @@
 (function () {
 
   var API_KEY_QUERY_STRING = '?api_key=YOUR_API_KEY__CHANGE_ME';
+  var POPUP_LOCATION_HOST =  'http://requestb.in/15e05j41';
 
   // Lightweight shim for those users that don't have a console
   if (typeof console === "undefined") {
@@ -368,9 +369,32 @@
         ctx.$el.find(':input[name="' + key + '"]').val(locationData[key]);
       }
 
+      ctx.$el.find('#run-location-post-async').on('click', function(){
+        ctx.isPopup  = false;
+      });
+
+      ctx.$el.find('#run-location-post-popup').on('click', function(){
+        // Ensure a single window is open
+        ctx.isPopup  = true;
+      });
+
       return this;
     },
     onSubmit: function () {
+
+      if (this.isPopup) {
+        var form =  this.$el.find('form');
+
+        if(this.swiqwin){
+          this.swiqwin.close();
+        }
+        this.swiqwin = window.open('','swiq3win');
+
+        form.attr('formtarget','swiq3win');
+        form.attr('action',POPUP_LOCATION_HOST);
+
+        return true;
+      }
 
       var locationData = {};
 
