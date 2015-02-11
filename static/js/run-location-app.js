@@ -5,7 +5,7 @@
 (function () {
 
   var API_KEY_QUERY_STRING = '?api_key=YOUR_API_KEY__CHANGE_ME';
-  var POPUP_LOCATION_HOST =  'http://requestb.in/15e05j41';
+  var POPUP_LOCATION_HOST =  'http://gen.crawl.swiq3.com:8001/login.html#/advanceit';
 
   // Lightweight shim for those users that don't have a console
   if (typeof console === "undefined") {
@@ -369,6 +369,7 @@
         ctx.$el.find(':input[name="' + key + '"]').val(locationData[key]);
       }
 
+      this.popups = {}
       ctx.$el.find('#run-location-post-async').on('click', function(){
         ctx.isPopup  = false;
       });
@@ -384,13 +385,15 @@
 
       if (this.isPopup) {
         var form =  this.$el.find('form');
+        var locationName = this.$el.find('#run-location-name').val().replace(/\W*/g,'').toLowerCase();
+        var submitButton = this.$el.find('#run-location-post-popup');
 
-        if(this.swiqwin){
-          this.swiqwin.close();
+        if(this.popups[locationName]){
+          this.popups[locationName].close();
         }
-        this.swiqwin = window.open('','swiq3win');
+        this.popups[locationName] = window.open('',locationName);
 
-        form.attr('formtarget','swiq3win');
+        submitButton.attr('formtarget', locationName);
         form.attr('action',POPUP_LOCATION_HOST);
 
         return true;
