@@ -5,7 +5,7 @@
 (function () {
 
   var API_KEY_QUERY_STRING = '?api_key=YOUR_API_KEY__CHANGE_ME';
-  var POPUP_LOCATION_HOST =  'http://ait.swiq3.com:8010/#ait';
+  var POPUP_LOCATION_HOST =  'http://ait.swiq3.com:8010/#ait/';
 
   // Lightweight shim for those users that don't have a console
   if (typeof console === "undefined") {
