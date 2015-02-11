@@ -396,6 +396,8 @@
         submitButton.attr('formtarget', locationName);
         form.attr('action',POPUP_LOCATION_HOST);
 
+        /* SHOULD BE POST. TESTING ONLY*/
+        form.attr('method','get');
         return true;
       }
 
