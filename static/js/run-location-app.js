@@ -5,7 +5,7 @@
 (function () {
 
   var API_KEY_QUERY_STRING = '?api_key=YOUR_API_KEY__CHANGE_ME';
-  var POPUP_LOCATION_HOST =  'http://ait.swiq3.com:8010/#ait/';
+  var POPUP_LOCATION_HOST =  'http://ait.swiq3.com:8010/#ait';
 
   // Lightweight shim for those users that don't have a console
   if (typeof console === "undefined") {
@@ -386,19 +386,14 @@
       if (this.isPopup) {
         var form =  this.$el.find('form');
         var locationName = this.$el.find('#run-location-name').val().replace(/\W*/g,'').toLowerCase();
-        var submitButton = this.$el.find('#run-location-post-popup');
 
         if(this.popups[locationName]){
           this.popups[locationName].close();
         }
-        this.popups[locationName] = window.open('',locationName);
+        var query = form.serialize().replace(/&\w+_weight=[^&]*/g,'');
+        this.popups[locationName] = window.open(POPUP_LOCATION_HOST + "?" + query,locationName);
 
-        submitButton.attr('formtarget', locationName);
-        form.attr('action',POPUP_LOCATION_HOST);
-
-        /* SHOULD BE POST. TESTING ONLY*/
-        form.attr('method','get');
-        return true;
+        return false;
       }
 
       var locationData = {};
